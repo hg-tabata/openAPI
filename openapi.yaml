@@ -1,0 +1,79 @@
+openapi: 3.0.0
+info:
+  title: Sample User API
+  version: 1.0.0
+  description: AWS Lambdaで提供するユーザーAPI
+
+servers:
+  - url: https://your-api-id.execute-api.ap-northeast-1.amazonaws.com/prod
+
+paths:
+  /users:
+    get:
+      summary: ユーザー一覧の取得
+      operationId: getUsers
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+
+    post:
+      summary: 新しいユーザーの作成
+      operationId: createUser
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserInput'
+      responses:
+        '201':
+          description: 作成成功
+
+  /users/{id}:
+    get:
+      summary: 特定ユーザーの取得
+      operationId: getUserById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '404':
+          description: ユーザーが見つからない
+
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        email:
+          type: string
+
+    UserInput:
+      type: object
+      required:
+        - name
+        - email
+      properties:
+        name:
+          type: string
+        email:
+          type: string
