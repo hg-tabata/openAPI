@@ -10,3 +10,6 @@ npx @openapitools/openapi-generator-cli generate \
 
 ▼ドキュメント
 openapi-generator-cli generate -i openapi.yaml -g html2 -o ./docs
+
+▼ローカルサーバ起動
+# npm start
